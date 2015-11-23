@@ -1,13 +1,16 @@
-package com.goyalzz;
+package com.goyalzz.controler.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.goyalzz.R;
 
 public class UserInfoForm extends AppCompatActivity {
 
@@ -17,6 +20,13 @@ public class UserInfoForm extends AppCompatActivity {
         setContentView(R.layout.activity_user_info_form);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
