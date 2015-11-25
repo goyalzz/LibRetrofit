@@ -15,8 +15,6 @@ import retrofit.client.OkClient;
  */
 public class BaseApplication extends Application {
 
-    private RetrofitApi api;
-
     @Override
     public void onCreate() {
         super.onCreate();

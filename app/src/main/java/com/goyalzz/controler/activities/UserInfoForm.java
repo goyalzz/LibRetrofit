@@ -9,10 +9,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.goyalzz.R;
+import com.goyalzz.core.BaseActivity;
+import com.goyalzz.helper.RoundedTransformation;
+import com.goyalzz.model.ResponseModel;
+import com.goyalzz.utils.CustomCallBacks;
+import com.goyalzz.utils.UtilitySingleton;
+import com.squareup.picasso.Picasso;
 
-public class UserInfoForm extends AppCompatActivity {
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+public class UserInfoForm extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +49,33 @@ public class UserInfoForm extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        ImageView image = (ImageView) findViewById(R.id.image);
+        Picasso.with(getApplicationContext()).load("http://www.sun-softtech.com/images/itsme.jpg").transform(new RoundedTransformation(100, 1)).error(R.drawable.user).into(image);
+
+        final EditText name = (EditText) findViewById(R.id.name);
+        final EditText email = (EditText) findViewById(R.id.email);
+        Button submit = (Button) findViewById(R.id.submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(UtilitySingleton.getInstance(getApplicationContext()).validateEmail(email)) {
+                    getRestService().postUserDetails(name.getText().toString(), email.getText().toString(), new CustomCallBacks<ResponseModel>(UserInfoForm.this, true) {
+                        @Override
+                        public void onSucess(ResponseModel arg0, Response arg1) {
+                            Toast.makeText(getApplicationContext(), arg0.message, Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onFailure(RetrofitError arg0) {
+                            Toast.makeText(getApplicationContext(), arg0.getKind().toString() + " ERROR: " + arg0.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
     @Override
