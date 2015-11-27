@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">SampleLiberary</string>
     <string name="action_settings">Settings</string>
+
+    <string name="gcmsenderid">567597863603</string>
+    <string name="googleapikey">AIzaSyAuyAD2GSVXct5hzaLQ5Y0Kbu4gP1XLpyo</string>
+
 </resources>

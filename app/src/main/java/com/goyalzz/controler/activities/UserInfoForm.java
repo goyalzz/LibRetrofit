@@ -3,8 +3,8 @@ package com.goyalzz.controler.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.goyalzz.R;
 import com.goyalzz.core.BaseActivity;
 import com.goyalzz.helper.RoundedTransformation;
@@ -25,7 +28,10 @@ import com.squareup.picasso.Picasso;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class UserInfoForm extends BaseActivity {
+public class UserInfoForm extends BaseActivity implements OnMapReadyCallback {
+
+    public SupportMapFragment fragment;
+    public GoogleMap googlemap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,7 @@ public class UserInfoForm extends BaseActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UtilitySingleton.getInstance(getApplicationContext()).validateEmail(email)) {
+                if (UtilitySingleton.getInstance(getApplicationContext()).validateEmail(email)) {
                     getRestService().postUserDetails(name.getText().toString(), email.getText().toString(), new CustomCallBacks<ResponseModel>(UserInfoForm.this, true) {
                         @Override
                         public void onSucess(ResponseModel arg0, Response arg1) {
@@ -76,6 +82,15 @@ public class UserInfoForm extends BaseActivity {
             }
         });
 
+        fragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        fragment.getMapAsync(this);
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googlemap = googleMap;
     }
 
     @Override
