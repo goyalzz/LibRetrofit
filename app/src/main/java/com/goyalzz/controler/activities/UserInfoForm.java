@@ -19,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.goyalzz.R;
 import com.goyalzz.core.BaseActivity;
+import com.goyalzz.helper.CircleTransform;
 import com.goyalzz.helper.RoundedTransformation;
 import com.goyalzz.model.ResponseModel;
 import com.goyalzz.utils.CustomCallBacks;
@@ -57,7 +58,8 @@ public class UserInfoForm extends BaseActivity implements OnMapReadyCallback {
         });
 
         ImageView image = (ImageView) findViewById(R.id.image);
-        Picasso.with(getApplicationContext()).load("http://www.sun-softtech.com/images/itsme.jpg").transform(new RoundedTransformation(100, 1)).error(R.drawable.user).into(image);
+//        Picasso.with(getApplicationContext()).load("http://www.sun-softtech.com/images/itsme.jpg").transform(new RoundedTransformation(100, 1)).error(R.drawable.user).into(image);
+        Picasso.with(getApplicationContext()).load("http://www.sun-softtech.com/images/itsme.jpg").transform(new CircleTransform()).error(R.drawable.user).into(image);
 
         final EditText name = (EditText) findViewById(R.id.name);
         final EditText email = (EditText) findViewById(R.id.email);
@@ -66,7 +68,7 @@ public class UserInfoForm extends BaseActivity implements OnMapReadyCallback {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (UtilitySingleton.getInstance(getApplicationContext()).validateEmail(email)) {
+                if(UtilitySingleton.getInstance(getApplicationContext()).validateEmail(email)) {
                     getRestService().postUserDetails(name.getText().toString(), email.getText().toString(), new CustomCallBacks<ResponseModel>(UserInfoForm.this, true) {
                         @Override
                         public void onSucess(ResponseModel arg0, Response arg1) {
@@ -82,8 +84,9 @@ public class UserInfoForm extends BaseActivity implements OnMapReadyCallback {
             }
         });
 
-        fragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        fragment = new SupportMapFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.map, fragment).commit();
         fragment.getMapAsync(this);
 
     }
