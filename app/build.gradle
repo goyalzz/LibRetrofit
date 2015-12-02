@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            keyAlias 'Keystore'
-            keyPassword 'Keystore'
-            storeFile file('./Keystore.keystore')
-            storePassword 'Keystore'
+            keyAlias 'liberary'
+            keyPassword 'liberary'
+            storeFile file('./liberary.keystore')
+            storePassword 'liberary'
         }
     }
     compileSdkVersion 23

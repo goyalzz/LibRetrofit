@@ -58,8 +58,8 @@ public class UserInfoForm extends BaseActivity implements OnMapReadyCallback {
         });
 
         ImageView image = (ImageView) findViewById(R.id.image);
-//        Picasso.with(getApplicationContext()).load("http://www.sun-softtech.com/images/itsme.jpg").transform(new RoundedTransformation(100, 1)).error(R.drawable.user).into(image);
-        Picasso.with(getApplicationContext()).load("http://www.sun-softtech.com/images/itsme.jpg").transform(new CircleTransform()).error(R.drawable.user).into(image);
+        Picasso.with(getApplicationContext()).load("https://i.ytimg.com/vi/MhVp9gcxLJY/maxresdefault.jpg").transform(new RoundedTransformation(100, 1)).error(R.drawable.user).into(image);
+//        Picasso.with(getApplicationContext()).load("http://www.sun-softtech.com/images/itsme.jpg").transform(new CircleTransform()).error(R.drawable.user).into(image);
 
         final EditText name = (EditText) findViewById(R.id.name);
         final EditText email = (EditText) findViewById(R.id.email);
@@ -94,6 +94,10 @@ public class UserInfoForm extends BaseActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googlemap = googleMap;
+        googlemap.setMyLocationEnabled(true);
+        googlemap.setBuildingsEnabled(true);
+        googlemap.getUiSettings().setMyLocationButtonEnabled(true);
+        googlemap.getUiSettings().setCompassEnabled(true);
     }
 
     @Override
